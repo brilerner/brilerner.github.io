@@ -7,7 +7,7 @@ permalink: /publication/2021-11-01-magnetostriction-rucl3
 date: 2021-11-01
 venue: 'Journal of Physical Chemistry C'
 # slidesurl: ''
-paperurl: 'https://brilerner.github.io/brilerner/files/papers/2021_I2021_Pai-magnetostriction-rucl3.pdf'
+paperurl: 'https://brilerner.github.io/brilerner/files/papers/2021_Pai-magnetostriction-rucl3.pdf'
 # bibtexurl: ''
 citation: 'Y.-Y. Pai et al. (2021). &quot;Magnetostriction of α-RuCl3 Flakes in the Zigzag Phase.&quot; <i>J. Phys. Chem. C</i> 125(46), 25687–25694.'
 ---

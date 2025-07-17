@@ -9,7 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
-[Download CV PDF]('https://brilerner.github.io/brilerner/files/Brian_Lerner___CV___20250716.pdf')
+[Download CV PDF](https://brilerner.github.io/brilerner/files/Brian_Lerner___CV___20250716.pdf)
 
 Education
 ======
