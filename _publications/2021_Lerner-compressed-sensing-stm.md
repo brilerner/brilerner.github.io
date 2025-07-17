@@ -2,9 +2,9 @@
 title: "Compressed sensing for scanning tunnel microscopy imaging of defects and disorder"
 collection: publications
 category: manuscripts
-permalink: /publication/2021-10-01-compressed-sensing-stm
+permalink: /publication/2021-10-14-compressed-sensing-stm
 # excerpt: 'This work explores compressed sensing methods to enhance STM imaging of defects and disorder.'
-date: 2021-10-01
+date: 2021-10-14
 venue: 'Physical Review Research'
 # slidesurl: ''
 paperurl: 'https://brilerner.github.io/brilerner/files/papers/2021_Lerner-compressed-sensing-stm.pdf'
