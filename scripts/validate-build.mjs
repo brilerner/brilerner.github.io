@@ -24,6 +24,7 @@ const required = [
   "apple-touch-icon.png",
   "about.html",
 ];
+const standalonePages = new Set(["reward-hacking/index.html"]);
 
 const failures = [];
 const exists = async (file) => fs.access(file).then(() => true, () => false);
@@ -110,10 +111,12 @@ for (const [relative, { document, source }] of documents) {
     (meta) => attribute(meta, "name") === "robots" && attribute(meta, "content")?.includes("noindex"),
   );
   const isRedirect = noindex && metas.some((meta) => attribute(meta, "http-equiv") === "refresh");
+  // Standalone pages served from public/ don't use the site layout.
+  const isStandalone = standalonePages.has(relative);
 
   if (!isRedirect) {
     if (elements(document, "main").length !== 1) failures.push(`${relative}: expected one main`);
-    if (!elements(document, "aside").some((node) => hasClass(node, "sidebar"))) {
+    if (!isStandalone && !elements(document, "aside").some((node) => hasClass(node, "sidebar"))) {
       failures.push(`${relative}: sidebar missing`);
     }
     if (!elements(document, "title").length) failures.push(`${relative}: title missing`);
