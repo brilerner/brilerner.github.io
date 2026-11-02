@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Reward Hacking</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A documentary by Brian Lerner. A personal meditation on how AI is reshaping the community that built it.">
+<meta property="og:title" content="Reward Hacking">
+<meta property="og:description" content="A personal meditation on how AI is reshaping the community that built it. A documentary by Brian Lerner.">
+<meta property="og:image" content="https://brilerner.github.io/reward-hacking/web/og.jpg">
+<meta property="og:url" content="https://brilerner.github.io/reward-hacking/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: section headers in a left rail, content on the right (stacks on phones). Review-form mono labels, highlighter accent. */
+html{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+body{margin:0}
+:root{
+  --paper:#F3F5F8; --surface:#FFFFFF; --ink:#141B2B; --muted:#5A6477; --rule:#D8DDE6;
+  --hi:#F4D64A; --hi-ink:#141B2B; --red:#C23A2F; --red-bg:#FBEAE8; --green:#1F7A4D; --green-bg:#E5F3EC; --blue:#2F5BD3;
+  --f-display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0D1220; --surface:#151C2E; --ink:#E7EAF1; --muted:#9BA5B8; --rule:#273049;
+  --hi:#E9C93B; --hi-ink:#0D1220; --red:#F06A5E; --red-bg:#2A1719; --green:#4FCB8B; --green-bg:#122A20; --blue:#7EA0FF; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0D1220; --surface:#151C2E; --ink:#E7EAF1; --muted:#9BA5B8; --rule:#273049;
+  --hi:#E9C93B; --hi-ink:#0D1220; --red:#F06A5E; --red-bg:#2A1719; --green:#4FCB8B; --green-bg:#122A20; --blue:#7EA0FF; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
+mark{background:linear-gradient(transparent 12%,var(--hi) 12%,var(--hi) 88%,transparent 88%);color:var(--hi-ink);padding:0 .15em}
+p{margin:0 0 .8em;max-width:62ch}
+.label{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h2{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,4vw,38px);line-height:1.05;letter-spacing:-.015em;margin:4px 0 0;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:700;font-size:21px;line-height:1.2;margin:0 0 .35em;text-wrap:balance}
+.lede{font-size:21px;line-height:1.45}
+.muted{color:var(--muted)}
+
+.progress{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:4px;z-index:20}
+.progress i{display:block;height:100%;width:0;background:var(--hi)}
+
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* hero */
+.hero{position:relative;color:#fff;background:#0b0f19;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,11,20,.35),rgba(8,11,20,.88))}
+.hero .wrap{position:relative;z-index:1;padding-block:120px 56px}
+.hero .label{color:rgba(255,255,255,.8)}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(56px,13vw,128px);line-height:.88;letter-spacing:-.035em;margin:.15em 0 .25em}
+.hero h1 span{display:block}
+.hero .sub{font-size:clamp(19px,2.6vw,24px);line-height:1.35;max-width:28ch;margin:0 0 24px}
+.hero .meta{font-family:var(--f-mono);font-size:13px;letter-spacing:.05em;opacity:.9}
+
+/* section rail layout */
+.sec{display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px;padding-block:64px;border-top:1px solid var(--rule)}
+.sec:first-of-type{border-top:0}
+.sec > header{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start}
+.sec > .body{min-width:0;display:grid;gap:44px}
+.block{display:grid;gap:14px}
+@media (max-width:780px){.sec{grid-template-columns:1fr;gap:22px;padding-block:48px}.sec > header{position:static}}
+
+.facts{display:grid;border-top:1px solid var(--rule)}
+.facts div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:12px 0;border-bottom:1px solid var(--rule)}
+.facts dt{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:4px}
+.facts dd{margin:0}
+@media (max-width:480px){.facts div{grid-template-columns:1fr;gap:2px}}
+
+/* chart */
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px}
+.chart{overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:300px;height:auto}
+.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:11px}
+.chart rect{transform-box:fill-box;transform-origin:bottom}
+.play .chart rect{animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+/* lanes */
+.lanes{display:grid;gap:14px}
+.lane{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:14px}
+.lane .who{font-family:var(--f-display);font-weight:700;font-size:17px;margin-bottom:10px}
+.lane .who small{display:block;font-family:var(--f-body);font-weight:400;font-size:15px;color:var(--muted)}
+.track{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tok{font-family:var(--f-mono);font-size:13px;background:var(--paper);border:1px solid var(--rule);border-radius:999px;padding:6px 12px}
+.arr{color:var(--muted);font-family:var(--f-mono)}
+.out{font-family:var(--f-mono);font-weight:600;font-size:13px;border-radius:999px;padding:6px 12px;border:2px solid}
+.out.bad{color:var(--red);border-color:var(--red);background:var(--red-bg)}
+.out.good{color:var(--green);border-color:var(--green);background:var(--green-bg)}
+.play .seq > *{animation:pop .45s ease both;animation-delay:calc(var(--i) * 280ms)}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* chain */
+.chain{display:grid;gap:10px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.node{font-family:var(--f-display);font-weight:600;font-size:16px;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:9px 12px}
+.node.warn{border-color:var(--red);color:var(--red);background:var(--red-bg)}
+.node.end{background:var(--hi);color:var(--hi-ink);border-color:var(--hi)}
+.branch{font-family:var(--f-mono);font-size:13px;color:var(--red);padding-left:4px}
+
+/* life graph */
+.life svg{display:block;width:100%;height:auto}
+.life svg text{font-family:var(--f-mono);font-size:11px;fill:var(--muted)}
+.life .line{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round}
+.life .dot{fill:var(--surface);stroke:var(--ink);stroke-width:2;cursor:pointer}
+.life .dot.on{fill:var(--hi)}
+.life .gpa{font-weight:600;fill:var(--red)}
+.life .grid{stroke:var(--rule);stroke-width:1}
+.life input[type=range]{width:100%;margin:12px 0 4px;accent-color:var(--ink)}
+.life .card{min-height:96px}
+.life .yr{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.life .card h3{margin:2px 0 2px}
+.life .card p{margin:0;font-size:16px}
+.hint{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+
+/* green / red */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.side{border-radius:12px;padding:18px;border:2px solid}
+.side.yes{background:var(--green-bg);border-color:var(--green)}
+.side.no{background:var(--red-bg);border-color:var(--red)}
+.side h3{font-size:19px}
+.side.yes h3{color:var(--green)} .side.no h3{color:var(--red)}
+.side ul{margin:0;padding-left:18px;display:grid;gap:8px;font-size:17px}
+@media (max-width:620px){.split{grid-template-columns:1fr}}
+
+/* story */
+.part{display:grid;gap:16px}
+.part-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.part-head .num{font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;color:var(--muted)}
+.part-head h3{font-size:28px;margin:0}
+.part.main{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:20px}
+.badge{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;background:var(--hi);color:var(--hi-ink);padding:3px 8px;border-radius:4px}
+.stops{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.stop{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:start}
+.stop .where{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.stop p{margin:0;font-size:17px}
+.stop b{font-family:var(--f-display)}
+@media (max-width:480px){.stop{grid-template-columns:1fr;gap:2px}}
+.strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.strip img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px}
+.strip2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.strip2 img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px}
+@media (max-width:620px){.strip{grid-template-columns:1fr 1fr}}
+.fly{display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.fly::before,.fly::after{content:"";flex:1;border-top:2px dashed var(--rule)}
+.fly svg{width:22px;height:22px;fill:var(--ink)}
+.play .fly svg{animation:flyin 1.2s ease both}
+@keyframes flyin{from{transform:translateX(-30px);opacity:0}to{transform:none;opacity:1}}
+.sub-h{font-family:var(--f-display);font-weight:700;font-size:18px;margin:6px 0 0}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;font-size:17px}
+.steps li::before{counter-increment:s;content:counter(s);font-family:var(--f-mono);font-weight:600;font-size:13px;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.person{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:12px}
+.person b{display:block;font-family:var(--f-display);font-size:16px}
+.person span{font-size:15px;color:var(--muted)}
+@media (max-width:620px){.people{grid-template-columns:1fr}}
+
+/* modes */
+.modes{display:grid;gap:10px}
+.mode{display:grid;grid-template-columns:130px minmax(0,1fr);gap:12px;align-items:center}
+.mode .name{font-family:var(--f-display);font-weight:700;font-size:16px}
+.mode .bar{position:relative;height:30px;background:var(--paper);border-radius:6px;overflow:hidden}
+.mode .bar i{position:absolute;inset:0 auto 0 0;background:var(--ink);border-radius:6px;transform-origin:left}
+.mode .bar span{position:relative;z-index:1;font-family:var(--f-mono);font-size:12px;line-height:30px;padding-left:10px;color:var(--paper);white-space:nowrap}
+.mode .what{grid-column:2;font-size:15px;color:var(--muted);margin-top:-4px}
+.play .mode .bar i{animation:wide .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes wide{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (max-width:480px){.mode{grid-template-columns:96px minmax(0,1fr)}}
+.quote{font-family:var(--f-display);font-weight:600;font-size:19px;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;display:inline-block}
+.influences{display:grid;grid-template-columns:1.4fr .8fr 1.4fr;gap:10px}
+.influences figure{margin:0;min-width:0}
+.influences img{width:100%;height:180px;object-fit:cover;border-radius:8px}
+.influences figcaption{font-family:var(--f-mono);font-size:12px;margin-top:6px;color:var(--muted)}
+@media (max-width:620px){.influences{grid-template-columns:1fr 1fr}.influences figure:first-child{grid-column:1 / -1}.influences img{height:150px}}
+
+/* timeline */
+.tl{list-style:none;padding:0;margin:0;display:grid}
+.tl li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px}
+.tl .d{font-family:var(--f-mono);font-size:13px;color:var(--muted);padding-top:3px}
+.tl li.key span:last-child{font-family:var(--f-display);font-weight:700}
+
+/* checklist */
+.check{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.check li{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;display:flex;gap:10px;align-items:center;font-size:17px}
+.box{width:20px;height:20px;border:2px solid var(--ink);border-radius:4px;flex:none;display:grid;place-items:center;font-size:13px;font-weight:700}
+.check li.ok .box{background:var(--ink);color:var(--paper)}
+.check li.ok span:last-child{color:var(--muted)}
+
+/* lineup */
+.lineup{background:var(--surface);border:2px solid var(--ink);border-radius:6px;overflow:hidden}
+.lineup .top{display:flex;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:2px solid var(--ink);font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.lineup table{width:100%;border-collapse:collapse}
+.lineup td{padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+.lineup tr:last-child td{border-bottom:0}
+.lineup td.n{font-family:var(--f-mono);width:40px;color:var(--muted)}
+.lineup td.pos{font-family:var(--f-display);font-weight:600;font-size:18px}
+.lineup td.st{text-align:right;font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:var(--red)}
+
+.contact{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.email{font-family:var(--f-mono);font-size:17px;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:10px 14px;user-select:all;word-break:break-all}
+button{font:600 15px var(--f-mono);background:var(--ink);color:var(--paper);border:0;border-radius:8px;padding:12px 16px;cursor:pointer}
+footer{padding-block:24px 56px;color:var(--muted);font-size:13px;border-top:1px solid var(--rule)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="progress" aria-hidden="true"><i id="bar"></i></div>
+
+<header class="hero">
+  <img src="web/neurips.webp" alt="A packed poster hall at a machine learning conference" fetchpriority="high">
+  <div class="wrap">
+    <div class="label">A documentary by Brian Lerner</div>
+    <h1><span>Reward</span><span>Hacking</span></h1>
+    <p class="sub">A personal meditation on how AI is reshaping the community that built it</p>
+    <div class="meta">USA + Australia · Shooting Nov–Dec 2026</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="sec" id="project">
+  <header><div class="label">01</div><h2>The Project</h2></header>
+  <div class="body">
+    <div class="block">
+      <p class="lede">Everyone in AI research is racing to make a splash, fast. A PhD student goes to the world's biggest AI conference to find out <mark>what the race is doing to the people in it</mark>, and whether his own rush to make this film is any different.</p>
+      <dl class="facts">
+        <div><dt>For</dt><dd>People who want to understand how AI is changing the nature of science, and where the real edge lies</dd></div>
+        <div><dt>Length</dt><dd>TBD</dd></div>
+        <div><dt>Release</dt><dd>YouTube along the way. Rough cut by April 2027. Final cut by end of summer 2027.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="why">
+  <header><div class="label">02</div><h2>Why Now</h2></header>
+  <div class="body">
+    <div class="block anim">
+      <h3>The biggest AI conference got 15× bigger since 2013.</h3>
+      <div class="panel chart"><svg id="subs" viewBox="0 0 640 290" role="img" aria-label="NeurIPS main-track submissions by year, from 1,420 in 2013 to 21,575 in 2025"></svg></div>
+      <p class="muted">NeurIPS submissions per year. About 1 in 4 papers still gets in.</p>
+    </div>
+
+    <div class="block anim">
+      <h3>Overloaded reviewers use AI. AI reviewers reward slop.</h3>
+      <div class="lanes">
+        <div class="lane"><div class="who">Our paper<small>Written by hand</small></div>
+          <div class="track seq"><span class="tok" style="--i:0">Submitted</span><span class="arr" style="--i:1">→</span><span class="tok" style="--i:2">AI review: "run more experiments"</span><span class="arr" style="--i:3">→</span><span class="tok" style="--i:4">We ran them all. No reply.</span><span class="arr" style="--i:5">→</span><span class="out bad" style="--i:6">Main track ✗</span></div></div>
+        <div class="lane"><div class="who">An AI slop paper<small>A small tweak of old work, tons of figures, a huge appendix</small></div>
+          <div class="track seq"><span class="tok" style="--i:0">Submitted</span><span class="arr" style="--i:1">→</span><span class="tok" style="--i:2">AI review: "thorough and comprehensive"</span><span class="arr" style="--i:3">→</span><span class="out good" style="--i:4">Glowing reviews ✓</span></div></div>
+      </div>
+      <img src="web/paper_pile.webp" alt="A man in an office between towering stacks of paper" loading="lazy" style="width:100%;aspect-ratio:16/7;object-fit:cover;border-radius:12px">
+    </div>
+
+    <div class="block anim">
+      <h3>For some, a paper is a ticket to stay in the US.</h3>
+      <div class="chain">
+        <div class="row seq"><span class="node" style="--i:0">Top-conference paper</span><span class="arr" style="--i:1">→</span><span class="node" style="--i:2">Big tech job</span><span class="arr" style="--i:3">→</span><span class="node" style="--i:4">Work visa</span><span class="arr" style="--i:5">→</span><span class="node end" style="--i:6">Stay in the US</span></div>
+        <div class="branch">But if you can't risk leaving the country…</div>
+        <div class="row seq"><span class="node warn" style="--i:0">Can't fly to present</span><span class="arr" style="--i:1">→</span><span class="node warn" style="--i:2">Pay a stranger to present your poster</span></div>
+      </div>
+    </div>
+
+    <p class="lede"><mark>None of this is about bad people.</mark> It's a system with weird incentives, and it's hurting the people inside it.</p>
+  </div>
+</section>
+
+<section class="sec" id="me">
+  <header><div class="label">03</div><h2>Who I Am</h2></header>
+  <div class="body">
+    <div class="block">
+      <p class="lede">I'm Brian, 33, a sixth-year PhD student at Duke, with a kid on the way in April.</p>
+      <div class="panel life">
+        <svg id="lifesvg" viewBox="0 0 640 260" role="img" aria-label="A line through Brian's life from 1999 to 2026, dipping in college and climbing after recovery"></svg>
+        <label class="hint" for="lifeRange">Drag through the years →</label>
+        <input type="range" id="lifeRange" min="0" max="9" value="0" step="1">
+        <div class="card" id="lifeCard" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="split">
+      <div class="side yes"><h3>Why I'm the right person</h3>
+        <ul><li>I'm an insider. I know the tech and the people.</li>
+        <li>My research is interdisciplinary and qualitative. I interview people for my work.</li>
+        <li>I feel like I'm a good communicator and empathizer, and the right person to get honest, emotional reactions from people.</li></ul></div>
+      <div class="side no"><h3>Why people in my life are nervous</h3>
+        <ul><li>I've chased big dreams before: pro baseball, then "the next Elon Musk."</li>
+        <li>I'm in recovery. Alcoholic thinking can make a grand idea and a real one feel the same, and the people who love me have seen that.</li>
+        <li>I have a lab counting on me and a baby due in April.</li></ul></div>
+    </div>
+    <p>I didn't fully know why I started a PhD. This feels right in a way that didn't. Part of the film is finding out if I'm right.</p>
+  </div>
+</section>
+
+<section class="sec" id="story">
+  <header><div class="label">04</div><h2>The Story</h2></header>
+  <div class="body">
+    <p class="lede">Three parts. Australia is the heart of it.</p>
+
+    <div class="part">
+      <div class="part-head"><span class="num">PART 1 · NOV</span><h3>Home</h3></div>
+      <div class="strip"><img src="web/softball_champ.webp" alt="Brian's softball team with a championship trophy" loading="lazy"><img src="web/field_of_dreams.webp" alt="Still from Field of Dreams" loading="lazy"><img src="web/central_park.webp" alt="Central Park" loading="lazy"><img src="web/thanksgiving.webp" alt="Illustration of a Thanksgiving dinner" loading="lazy"></div>
+      <ol class="stops">
+        <li class="stop"><span class="where">Cold open</span><p>A deadline all-nighter with AI, then the awful morning after.</p></li>
+        <li class="stop"><span class="where">Durham</span><p>After our softball championship, I tell my teammates at the bar I want to make a film.</p></li>
+        <li class="stop"><span class="where">Home</span><p>My wife and I watch the <em>Field of Dreams</em> "you're nuts, but do it" scene. Her verdict: "That guy's nuts."</p></li>
+        <li class="stop"><span class="where">Duke</span><p>My advisor and lab on everything they're counting on me for.</p></li>
+        <li class="stop"><span class="where">New York</span><p>Thanksgiving with the skeptics: family, Grandma (my small investor), the Reverend I did community service with, my old recovery house director.</p></li>
+        <li class="stop"><span class="where">Florida</span><p>Grandpa, 97.</p></li>
+      </ol>
+    </div>
+
+    <div class="fly anim"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>Durham → Sydney</div>
+
+    <div class="part main anim">
+      <div class="part-head"><span class="num">PART 2 · DEC</span><h3>Australia</h3><span class="badge">THE MAIN EVENT</span></div>
+      <div class="strip2"><img src="web/sydney.webp" alt="Sydney skyline at night" loading="lazy"><img src="web/neurips.webp" alt="Crowded NeurIPS poster hall" loading="lazy"></div>
+      <div class="sub-h">ML4H, a smaller healthcare AI conference · Dec 6–7</div>
+      <ol class="steps">
+        <li>I present a friend's poster, my way in.</li>
+        <li>I meet people paying strangers to present their posters.</li>
+        <li>I confront the author of a paper we think is AI slop. If they won't go on record, we change their face with AI.</li>
+      </ol>
+      <div class="sub-h">NeurIPS, the world's biggest AI conference · Dec 6–12</div>
+      <ol class="steps" style="counter-reset:s 3">
+        <li>I capture the spectacle: poster halls, company booths, the crowds.</li>
+        <li>I spend a day with each of three people:</li>
+      </ol>
+      <div class="people">
+        <div class="person"><b>The international student</b><span>Their career, and maybe their visa, rides on one poster.</span></div>
+        <div class="person"><b>The high schooler</b><span>Already publishing at the biggest AI conference. How, and why?</span></div>
+        <div class="person"><b>The almost-graduate</b><span>Hunting for a job in a market built on paper counts.</span></div>
+      </div>
+      <ol class="steps" style="counter-reset:s 5">
+        <li>The night ends at a tech company's after-party.</li>
+      </ol>
+    </div>
+
+    <div class="fly anim"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>Sydney → Queensland</div>
+
+    <div class="part">
+      <div class="part-head"><span class="num">PART 3 · DEC</span><h3>The Reef</h3></div>
+      <img src="web/snorkeling.webp" alt="Snorkelers over a coral reef" loading="lazy" style="width:100%;aspect-ratio:16/7;object-fit:cover;border-radius:12px">
+      <p>A few days snorkeling, at peace, about to be a dad. Then home.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="approach">
+  <header><div class="label">05</div><h2>Approach</h2></header>
+  <div class="body">
+    <p class="lede">I'm combining a personal story with documentary and experimental filmmaking, so people <mark>learn something, see themselves in it, and stay invested</mark>.</p>
+
+    <div class="block anim">
+      <h3>The mix</h3>
+      <p class="muted">Film theorist Bill Nichols sorts documentaries into modes. Here's my blend.</p>
+      <div class="modes" id="modes"></div>
+    </div>
+
+    <div class="block">
+      <h3>How I get people talking</h3>
+      <ol class="steps">
+        <li>I tell people I'm making a student film. Then a quick game: <span class="quote">"Was this joke written by AI or a human?"</span></li>
+        <li>I set up situations, like running a paper through an AI reviewer on camera.</li>
+        <li>Once people relax, the real stuff comes out: the pressure, the visas, the job hunt.</li>
+      </ol>
+      <p>The camera isn't a fly on the wall. It's a catalyst for honesty, the way the early vérité filmmakers used it.</p>
+    </div>
+
+    <div class="block">
+      <h3>Influences</h3>
+      <div class="influences">
+        <figure><img src="web/john_wilson.webp" alt="John Wilson filming on a street" loading="lazy"><figcaption>How To with John Wilson</figcaption></figure>
+        <figure><img src="web/shermans_march.webp" alt="Sherman's March poster" loading="lazy" style="object-position:top"><figcaption>Sherman's March</figcaption></figure>
+        <figure><img src="web/channel_5.webp" alt="Andrew Callaghan interviewing someone outdoors" loading="lazy"><figcaption>Channel 5</figcaption></figure>
+      </div>
+      <p class="muted">Music: TBD. Distinct sounds that shift with the pace.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="timeline">
+  <header><div class="label">06</div><h2>Timeline</h2></header>
+  <div class="body">
+    <ol class="tl">
+      <li><span class="d">Nov</span><span>Shoot at home. Championship done ✓</span></li>
+      <li class="key"><span class="d">Dec</span><span>Shoot in Australia.</span></li>
+      <li><span class="d">Jan</span><span>Organize footage, follow-ups.</span></li>
+      <li class="key"><span class="d">Apr 2027</span><span>Rough cut. Baby due.</span></li>
+      <li><span class="d">Summer</span><span>Final cut.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="budget">
+  <header><div class="label">07</div><h2>Budget</h2></header>
+  <div class="body">
+    <ul class="check">
+      <li class="ok"><span class="box">✓</span><span>Travel, paid</span></li>
+      <li class="ok"><span class="box">✓</span><span>Registration, paid</span></li>
+      <li><span class="box"></span><span>Cameras</span></li>
+      <li><span class="box"></span><span>Audio gear</span></li>
+      <li><span class="box"></span><span>Editing setup</span></li>
+    </ul>
+    <p>Borrow or rent gear first. Then a small ask to family and friends.</p>
+  </div>
+</section>
+
+<section class="sec" id="team">
+  <header><div class="label">08</div><h2>Looking For</h2></header>
+  <div class="body">
+    <div class="lineup" role="region" aria-label="Open roles">
+      <div class="top"><span>Reward Hacking</span><span>Lineup card</span></div>
+      <table>
+        <tr><td class="n">1</td><td class="pos">Editor</td><td class="st">OPEN</td></tr>
+        <tr><td class="n">2</td><td class="pos">Sound help</td><td class="st">OPEN</td></tr>
+        <tr><td class="n">3</td><td class="pos">Documentary mentor</td><td class="st">OPEN</td></tr>
+        <tr><td class="n">4</td><td class="pos">Music supervisor</td><td class="st">OPEN</td></tr>
+        <tr><td class="n">5</td><td class="pos">An interested friend :)</td><td class="st">OPEN</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="next">
+  <header><div class="label">09</div><h2>Next Steps</h2></header>
+  <div class="body">
+    <ol class="steps">
+      <li>Lock the plan and collaborators.</li>
+      <li>Get gear.</li>
+      <li>Email NeurIPS about filming.</li>
+      <li>Line up people to follow in Sydney.</li>
+    </ol>
+    <div class="block">
+      <p class="lede">Advice, intros, gear, or just interest. All of it helps.</p>
+      <div class="contact"><span class="email" id="email">brianelerner@gmail.com</span><button type="button" id="copy">Copy email</button></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="wrap"><p>Submission counts: NeurIPS program chairs (2025) and Paper Copilot (earlier years), main track, approximate. Film stills belong to their makers.</p></footer>
+
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg";
+  function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+  var bar=document.getElementById('bar');
+  function prog(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;bar.style.width=(m>0?h.scrollTop/m*100:0)+'%'}
+  addEventListener('scroll',prog,{passive:true});prog();
+
+  // submissions chart
+  var data=[[2013,1420],[2014,1678],[2015,1838],[2016,2403],[2017,3240],[2018,4856],[2019,6743],[2020,9467],[2021,9122],[2022,10411],[2023,12345],[2024,15671],[2025,21575]];
+  var s=document.getElementById('subs'),L=50,R=630,T=34,B=258,max=24000;
+  [0,10000,20000].forEach(function(v){var y=B-(v/max)*(B-T);el('line',{x1:L,x2:R,y1:y,y2:y,stroke:'var(--rule)'},s);var t=el('text',{x:L-8,y:y+4,'text-anchor':'end'},s);t.textContent=v?(v/1000)+'k':'0'});
+  var bw=(R-L)/data.length;
+  data.forEach(function(d,i){var x=L+i*bw+bw*.16,w=bw*.68,h=(d[1]/max)*(B-T),last=i===data.length-1;
+    var r=el('rect',{x:x,y:B-h,width:w,height:h,rx:2,fill:last?'var(--hi)':'var(--ink)',stroke:last?'var(--ink)':'none','stroke-width':1.5},s);r.style.animationDelay=(i*60)+'ms';
+    if(i%3===0||last){var t=el('text',{x:x+w/2,y:B+16,'text-anchor':'middle'},s);t.textContent=d[0]}
+    if(i===0||last){var t2=el('text',{x:x+w/2,y:B-h-8,'text-anchor':'middle',style:'fill:var(--ink);font-weight:600;font-size:12px'},s);t2.textContent=d[1].toLocaleString()}});
+
+  // modes
+  var modes=[['Participatory',35,'Me talking with people, mostly from behind the camera'],['Observational',25,'Long scenes that let things breathe'],['Performative',20,'My own arc, with light voiceover'],['Reflexive',12,'Making the film, strongest early on'],['Poetic',8,'The bookends and moments inside my head']];
+  var mw=document.getElementById('modes');
+  modes.forEach(function(m,i){var d=document.createElement('div');d.className='mode';
+    d.innerHTML='<div class="name">'+m[0]+'</div><div class="bar"><i style="width:'+(m[1]/35*100)+'%;animation-delay:'+(i*120)+'ms"></i><span>'+m[1]+'%</span></div><div class="what">'+m[2]+'</div>';mw.appendChild(d)});
+
+  // life graph
+  var life=[
+    {y:1999,v:7,yr:'1999–2013',h:'Going to be a pro baseball player',p:'From age 6 to 20, that was the plan.'},
+    {y:2011,v:3.5,yr:'2011',h:'Dropped out of GW',p:'One semester, then out.'},
+    {y:2013,v:5,yr:'2012–2015',h:'County college',p:'Three years, one season of college baseball.'},
+    {y:2015,v:8.5,yr:'2015',h:'"The next Elon Musk"',p:'Rutgers, physics and computer science. Lerner’s Lair. Big plans.'},
+    {y:2016,v:1,yr:'2015–2016',h:'GPA: 0.0',p:'Two semesters of drugs, alcohol, and not much class.',gpa:'GPA 0.0'},
+    {y:2017,v:0.4,yr:'2017',h:'Arrested, then rehab',p:'Then a recovery house, and a new start.'},
+    {y:2018.3,v:7,yr:'2017–2019',h:'Straight A’s',p:'Same majors, living in a recovery house.',gpa:'GPA 4.0'},
+    {y:2019.5,v:7.6,yr:'2019',h:'Graduated, then Oak Ridge National Lab',p:'Research at a national lab.'},
+    {y:2021.5,v:8.2,yr:'2021–2022',h:'Duke PhD, then a pivot',p:'Quantum computing, then machine learning for healthcare. Found out I love mentoring.'},
+    {y:2026,v:7,yr:'2026',h:'Now',p:'A lab, a baby on the way, and a film.',q:true}];
+  var ls=document.getElementById('lifesvg'),lx=function(y){return 30+(y-1998)/29*590},ly=function(v){return 220-v/10*190};
+  [2000,2005,2010,2015,2020,2025].forEach(function(y){el('line',{class:'grid',x1:lx(y),x2:lx(y),y1:20,y2:222},ls);var t=el('text',{x:lx(y),y:244,'text-anchor':'middle'},ls);t.textContent=y});
+  el('polyline',{class:'line',points:life.map(function(d){return lx(d.y)+','+ly(d.v)}).join(' ')},ls);
+  var dots=life.map(function(d,i){
+    if(d.gpa){var g=el('text',{class:'gpa',x:lx(d.y)+(d.v<3?12:-10),y:ly(d.v)+(d.v<3?-6:-14),'text-anchor':d.v<3?'start':'end'},ls);g.textContent=d.gpa}
+    if(d.q){var q=el('text',{x:lx(d.y),y:ly(d.v)-16,'text-anchor':'middle',style:'fill:var(--ink);font-weight:600;font-size:15px'},ls);q.textContent='?'}
+    var c=el('circle',{class:'dot',cx:lx(d.y),cy:ly(d.v),r:7,tabindex:0,role:'button','aria-label':d.yr+': '+d.h},ls);
+    c.addEventListener('click',function(){show(i)});c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();show(i)}});return c});
+  var range=document.getElementById('lifeRange'),card=document.getElementById('lifeCard');
+  function show(i){range.value=i;dots.forEach(function(c,j){c.classList.toggle('on',j===i);c.setAttribute('r',j===i?9:7)});var d=life[i];card.innerHTML='<div class="yr">'+d.yr+'</div><h3>'+d.h+'</h3><p>'+d.p+'</p>'}
+  range.addEventListener('input',function(){show(+range.value)});show(0);
+
+  // play animations when blocks enter view (content is visible without this)
+  if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('play');io.unobserve(e.target)}})},{threshold:.35});
+    [].forEach.call(document.querySelectorAll('.anim'),function(n){io.observe(n)})}
+
+  var btn=document.getElementById('copy'),em=document.getElementById('email');
+  btn.addEventListener('click',function(){function sel(){var r=document.createRange();r.selectNodeContents(em);var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected'}
+    try{navigator.clipboard.writeText(em.textContent).then(function(){btn.textContent='Copied'},sel)}catch(e){sel()}
+    setTimeout(function(){btn.textContent='Copy email'},2400)});
+})();
+</script>
+
+</body>
+</html>
